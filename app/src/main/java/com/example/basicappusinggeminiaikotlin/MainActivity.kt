@@ -112,11 +112,13 @@ fun ModelCall(modifier: Modifier = Modifier) {
         Button(
             onClick = {
                 if (prompt.isNotBlank()) {
+                    val currentPrompt = prompt
                     isLoading = true
                     responseText = "" // Clear previous response
+                    prompt = "" // Clear input field
                     coroutineScope.launch {
                         try {
-                            val response = generativeModel.generateContent(prompt)
+                            val response = generativeModel.generateContent(currentPrompt)
                             responseText = response.text ?: "No text in response"
                         } catch (e: Exception) {
                             Log.e("GeminiAI", "Error generating content", e)
